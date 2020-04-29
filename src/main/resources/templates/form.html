@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+				<form th:action="@{/form}" method="post" th:object="${cliente}" enctype="multipart/form-data">
+
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2" for="nombre"><strong>Nombre</strong></label>
+						<div class="row col-sm-2">
+							<input type="text" id="nombre" th:field="*{nombre}"
+								class="form-control"></input>
+						</div>
+						<div style="color: red" class="col-sm-4"
+							th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2" for="apellido"><strong>Apellido</strong></label>
+						<div class="row col-sm-2">
+							<input type="text" id="apellido" th:field="*{apellido}"
+								class="form-control"></input>
+						</div>
+						<div style="color: red" class="col-sm-4"
+							th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2" for="email"><strong>Email</strong></label>
+						<div class="row col-sm-2">
+							<input type="text" id="email" th:field="*{email}"
+								class="form-control "></input>
+						</div>
+						<div style="color: red" class="col-sm-4"
+							th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+					</div>
+
+
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2" for="createdAt"><strong>Fecha
+								Creacion</strong></label>
+						<div class="row  col-sm-2">
+							<input type="date" id="createdAt" th:field="*{createdAt}"
+								placeholder="yyyy-MM-dd" class="form-control"></input>
+						</div>
+						<div style="color: red" class="col-sm-4"
+							th:if="${#fields.hasErrors('createdAt')}"
+							th:errors="*{createdAt}"></div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2" for="file"><strong>File</strong></label>
+						<div class="row  col-sm-2">
+							<input type="file" name="file"  class="form-control"></input>
+						</div>
+
+					</div>
+					
+
+					<div class="form-group">
+						<div>
+							<input type="submit" value="Enviar" class="btn btn-primary"></input>
+						</div>
+					</div>
+
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	<div class="container py-4">
+
+		<div class="card bg-light">
+
+			<div class="card-header" th:text="${titulo}"></div>
+
+
+
+			<div class="card-body ">
+
+				<h4 class="card-title">
+
+					<a th:href="@{/form}" class="btn btn-primary btn-xs"> Crear
+						cliente </a>
+				</h4>
+
+				<div th:if="${clientes.isEmpty()}">No hay usuario en la lista</div>
+				<table class="table table-striped" th:if="${!clientes.isEmpty()}">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Email</th>
+							<th>Fecha</th>
+							<th>Crear factura</th>
+							<th>Editar</th>
+							<th>Borrar</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="cliente: ${clientes}">
+							<td><a th:text="${cliente.id}"
+								th:href="@{/ver}+'/'+${cliente.id}"> </a></td>
+							<td th:text="${cliente.nombre}"></td>
+							<td th:text="${cliente.apellido}"></td>
+							<td th:text="${cliente.email}"></td>
+							<td th:text="${cliente.createdAt}"></td>
+							<td><a class="btn btn-secondary"
+								th:href="@{/factura/form}+'/'+${cliente.id}">Crear factura <span
+									class="sr-only">(current)</span></a></td>
+							<td><a class="btn btn-primary"
+								th:href="@{/form}+'/'+${cliente.id}">Editar <span
+									class="sr-only">(current)</span></a></td>
+							<td><button class="btn btn-danger"
+									th:data-href="@{/borrar}+'/'+${cliente.id}" data-toggle="modal"
+									data-target="#confirm-delete">Borrar</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<nav th:replace="paginator :: paginator"></nav>
+			</div>
+		</div>
+
+		<div th:replace="layout/layoutDialog :: dialog"></div>
+
+</div>
+<script>
+		$('#confirm-delete').on(
+				'show.bs.modal',
+				function(e) {
+					$(this).find('.btn-ok').attr('href',
+							$(e.relatedTarget).data('href'));
+
+				});
+		
+		$( document ).ready(function() {
+		    console.log( "ready!" );
+		    $('#navCliente').addClass('active');
+		   
+		});
+	</script>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
