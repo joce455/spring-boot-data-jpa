@@ -16,21 +16,21 @@
 				<h4 class="card-title">
 
 					<a class="btn btn-primary btn-xs"
-						th:href="@{/ver/}+'/'+${factura.cliente.id}"> &laquo; Volver</a>
+						th:href="@{/ver/}+'/'+${factura.cliente.id}" th:text="#{text.global.volver}"> </a>
 				</h4>
 
 				<form th:action="@{/factura/form}" method="post"
 					th:object="${factura}">
 					<div class="form-group row">
 
-						<label class="col-form-label col-sm-2" for="cliente"><strong>Cliente</strong></label>
+						<label class="col-form-label col-sm-2" for="cliente"><strong th:text="#{text.menu.customer}">Cliente</strong></label>
 
 						<input id="cliente"
 							th:value="${factura.cliente.nombre}+' '+ ${factura.cliente.apellido}"
 							disabled="disabled" />
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-sm-2" for="descripcion"><strong>Descripcion</strong></label>
+						<label class="col-form-label col-sm-2" for="descripcion"><strong th:text="#{text.cliente.factura.descripcion}">Descripcion</strong></label>
 						<div class="row col-sm-2">
 							<input type="text" id="descripcion" th:field="*{descripcion}"
 								class="form-control"></input>
@@ -41,7 +41,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-form-label col-sm-2" for="observacion"><strong>Observacion</strong></label>
+						<label class="col-form-label col-sm-2" for="observacion"><strong  th:text="#{text.factura.form.observacion}">Observacion</strong></label>
 						<div class="row col-sm-6">
 							<textarea id="observacion" th:field="*{observacion}"
 								class="form-control"></textarea>
@@ -52,7 +52,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-form-label col-sm-2" for="buscar_producto"><strong>Buscar
+						<label class="col-form-label col-sm-2" for="buscar_producto"><strong th:text="#{text.factura.form.buscar}">Buscar
 								producto</strong></label>
 						<div class="row col-sm-6">
 							<input type="text" id="buscar_producto" name="buscar_producto"
@@ -67,11 +67,11 @@
 					<table id="cargarItemProductos" class="table table-sm table-striped table-hover">
 						<thead>
 						<tr>
-						<th>Nombre</th>
-						<th>Precio</th>
-						<th>Cantidad</th>
-						<th>Total</th>
-						<th>Eliminar</th>
+						<th th:text="#{text.cliente.nombre}">Nombre</th>
+						<th th:text="#{text.factura.form.item.precio}">Precio</th>
+						<th th:text="#{text.factura.form.item.cantidad}">Cantidad</th>
+						<th th:text="#{text.factura.form.item.total}">Total</th>
+						<th th:text="#{text.factura.form.item.eliminar}">Eliminar</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -81,7 +81,7 @@
 					<h5><span class="badge badge-secondary" id="totalFactura">0</span></h5>
 					<div class="form-group">
 						<div>
-							<input type="submit" value="Enviar" class="btn btn-primary"></input>
+							<input type="submit" th:value="#{text.cliente.factura.crear}" class="btn btn-primary"></input>
 						</div>
 					</div>
 

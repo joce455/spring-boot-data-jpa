@@ -15,7 +15,7 @@
 				<form th:action="@{/form}" method="post" th:object="${cliente}" enctype="multipart/form-data">
 
 					<div class="form-group row">
-						<label class="col-form-label col-sm-2" for="nombre"><strong>Nombre</strong></label>
+						<label class="col-form-label col-sm-2" for="nombre"><strong th:text="#{text.cliente.nombre}">Nombre</strong></label>
 						<div class="row col-sm-2">
 							<input type="text" id="nombre" th:field="*{nombre}"
 								class="form-control"></input>
@@ -25,7 +25,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-form-label col-sm-2" for="apellido"><strong>Apellido</strong></label>
+						<label class="col-form-label col-sm-2" for="apellido" ><strong th:text="#{text.cliente.apellido}">Apellido</strong></label>
 						<div class="row col-sm-2">
 							<input type="text" id="apellido" th:field="*{apellido}"
 								class="form-control"></input>
@@ -35,7 +35,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-form-label col-sm-2" for="email"><strong>Email</strong></label>
+						<label class="col-form-label col-sm-2" for="email"><strong th:text="#{text.cliente.email}">Email</strong></label>
 						<div class="row col-sm-2">
 							<input type="text" id="email" th:field="*{email}"
 								class="form-control "></input>
@@ -46,7 +46,7 @@
 
 
 					<div class="form-group row">
-						<label class="col-form-label col-sm-2" for="createdAt"><strong>Fecha
+						<label class="col-form-label col-sm-2" for="createdAt"><strong th:text="#{text.cliente.createAt}">Fecha
 								Creacion</strong></label>
 						<div class="row  col-sm-2">
 							<input type="date" id="createdAt" th:field="*{createdAt}"
@@ -58,7 +58,7 @@
 					</div>
 					
 					<div class="form-group row">
-						<label class="col-form-label col-sm-2" for="file"><strong>File</strong></label>
+						<label class="col-form-label col-sm-2" for="file"><strong th:text="#{text.cliente.foto}">File</strong></label>
 						<div class="row  col-sm-2">
 							<input type="file" name="file"  class="form-control"></input>
 						</div>
@@ -68,7 +68,7 @@
 
 					<div class="form-group">
 						<div>
-							<input type="submit" value="Enviar" class="btn btn-primary"></input>
+							<input type="submit" th:value="${buttonText}" class="btn btn-primary"></input>
 						</div>
 					</div>
 

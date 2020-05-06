@@ -1,10 +1,13 @@
 package com.bolsaideas.springboot.app.controllers;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +27,8 @@ import com.bolsaideas.springboot.app.entyties.ItemFactura;
 import com.bolsaideas.springboot.app.entyties.Producto;
 import com.bolsaideas.springboot.app.service.IClienteService;
 
+
+@Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping("/factura")
 @SessionAttributes("factura")
@@ -32,8 +37,11 @@ public class FacturaController {
 	@Autowired
 	IClienteService clienteService;
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 	@GetMapping("/form/{clienteId}")
-	public String crear(@PathVariable Long clienteId, Model model, RedirectAttributes flash) {
+	public String crear(@PathVariable Long clienteId, Model model, RedirectAttributes flash,Locale locale) {
 		Cliente resultado=clienteService.findOne(clienteId);
 		
 		if (resultado==null) {
@@ -42,14 +50,15 @@ public class FacturaController {
 		}
 		Factura factura= new  Factura();
 		factura.setCliente(resultado);
+		
 		model.addAttribute("factura", factura);
-		model.addAttribute("titulo", "Crear factura");
+		model.addAttribute("titulo", messageSource.getMessage("text.cliente.factura.crear", null, locale));
 		
 		return "factura/form";
 	}
 	@GetMapping("/ver/{id}")
 	public String verDetalleFactura(
-			@PathVariable Long id, Model model, RedirectAttributes flash) {
+			@PathVariable Long id, Model model, RedirectAttributes flash,Locale locale) {
 		
 		//Factura factura= clienteService.FindFacturaById(id);
 		Factura factura=clienteService.fetchFacturaByIdWithClienteWithItemFacturaWithProducto(id);
@@ -59,7 +68,8 @@ public class FacturaController {
 		}
 		
 		model.addAttribute("factura",factura);
-		model.addAttribute("titulo","Detalle factura");
+		model.addAttribute("titulo", messageSource.getMessage("text.cliente.factura.detalle", null, locale));
+		
 		return "factura/ver";
 	}
 	

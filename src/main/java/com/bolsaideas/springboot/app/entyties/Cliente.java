@@ -22,6 +22,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -51,6 +52,7 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@OneToMany(mappedBy = "cliente",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+	@JsonManagedReference
 	private List<Factura> facturas;
 
 	

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	<div class="container py-4">
+
+		<div class="card bg-light">
+
+			<div class="card-header" th:text="${titulo}"></div>
+
+
+
+			<div class="card-body ">
+
+				<h4 class="card-title">
+
+					<a sec:authorize="hasRole('ROLE_ADMIN')"
+						th:href="@{/productos/form}" class="btn btn-primary btn-xs" th:text="#{text.producto.boton.crear}">
+						Crear Producto </a>
+						
+						<a class="btn btn-outline-success btn-xs float-right mx-1"
+						th:href="@{'/productos/listar-productos'(format=json)}"> JSON </a>
+				</h4>
+
+				<div th:if="${productos.isEmpty()}" >No hay usuario en la lista</div>
+				<table class="table table-striped" th:if="${!productos.isEmpty()}">
+					<thead>
+						<tr>
+							<th >Id</th>
+							<th th:text="#{text.producto.datos.nombre}">Nombre</th>
+							<th th:text="#{text.producto.datos.precio}">Precio</th>
+							<th th:text="#{text.producto.datos.fecha}">Fecha</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{text.cliente.editar}">Editar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{text.cliente.eliminar}">Borrar</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="producto: ${productos}">
+							<td th:text="${producto.id}"></td>
+							<td th:text="${producto.nombre}"></td>
+							<td th:text="${producto.precio}"></td>
+							<td th:text="${producto.createAt}"></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+								class="btn btn-primary"
+								th:href="@{/productos/form}+'/'+${producto.id}" th:text="#{text.cliente.editar}">Editar <span
+									class="sr-only">(current)</span></a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><button
+									class="btn btn-danger"
+									th:data-href="@{/productos/borrar}+'/'+${producto.id}"
+									data-toggle="modal" data-target="#confirm-delete" th:text="#{text.cliente.eliminar}">Borrar</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<nav th:replace="paginator :: paginator"></nav>
+			</div>
+		</div>
+
+		<div th:replace="layout/layoutDialog :: dialog"></div>
+	</div>
+
+	<script>
+		$('#confirm-delete').on(
+				'show.bs.modal',
+				function(e) {
+					$(this).find('.btn-ok').attr('href',
+							$(e.relatedTarget).data('href'));
+
+				});
+
+		$(document).ready(function() {
+			console.log("ready!");
+			$('#navProductos').addClass('active');
+
+		});
+	</script>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

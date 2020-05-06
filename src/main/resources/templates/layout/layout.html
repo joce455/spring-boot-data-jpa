@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
 <meta charset="UTF-8" />
 <title th:text="${titulo}"></title>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
 
@@ -28,13 +33,50 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					
-					<li id="navCliente" class="nav-item"><a class="nav-link" th:href="@{/listar}">Clientes</a>
-					</li>
-					<li id="navProductos" class="nav-item"><a class="nav-link" th:href="@{/productos/listar}">Productos</a>
-					</li>
+				<ul class="navbar-nav mr-auto">
+
+					<li id="navCliente" class="nav-item"><a class="nav-link"
+						th:href="@{/listar}" th:text="#{text.tab1.titulo}">Clientes</a></li>
+					<li id="navProductos" class="nav-item"><a class="nav-link"
+						th:href="@{/productos/listar-productos}" th:text="#{text.tab2.titulo}">Productos</a></li>
 				</ul>
+				<ul class="navbar-nav navbar-right">
+					<li sec:authorize="!isAuthenticated()"><a
+						class="btn btn-outline-primary" th:href="@{/login}"
+						th:text="#{text.login.boton}"
+						>Login</a></li>
+					<li sec:authorize="isAuthenticated()" class="dropdown"><a
+						class="btn btn-secondary dropdown-toggle" href="#" role="button"
+						id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"><span sec:authentication="name"></span>
+					</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<form id="logoutForm" th:action="@{/logout}" method="post">
+								<button class="dropdown-item"
+									onClick="document.getElementById('logoutForm').submit();"
+									type="submit">Sign Out</button>
+
+							</form>
+						</div></li>
+				</ul>
+<ul class="navbar-nav navbar-right mx-4">
+					
+					<li class="nav-item dropdown show mx-2"><a
+						class="btn btn-outline-primary dropdown-toggle" href="#"
+						role="button" id="dropdownLenguaje" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"><span
+							th:text="#{text.locale.language}"></span></a>
+
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<a class="dropdown-item" th:href="@{/locale(lang=es_ES)}"
+								th:text="#{text.locale.es}">ES</a> <a class="dropdown-item"
+								th:href="@{/locale(lang=en_US)}" th:text="#{text.locale.en}">EN</a>
+							<a class="dropdown-item" th:href="@{/locale(lang=de_DE)}"
+								th:text="#{text.locale.de}">DE</a>
+						</div></li>
+				</ul>
+				
+				
 			</div>
 		</nav>
 		<div class="alert alert-success" th:if="${success != null}"
@@ -50,12 +92,15 @@
 	<footer class="container" th:fragment="footer">
 		<hr>
 
-		<img style="width: 8rem;" class="card-img-top"  th:src="@{/images/spring.png}">
-		<p>Proyecto spring boot</p>
-		<p>Lorem Ipsum is simply dummy text of the printing and
-			typesetting industry. Lorem Ipsum has been the industry's standard
-			dummy text ever since the 1500s, when an unknown printer took a
-			galley of type and scrambled it to make a type specimen book.</p>
+		<img style="width: 8rem;" class="card-img-top"
+			th:src="@{/images/spring.png}">
+		<p sec:authorize="isAuthenticated()" >
+			<span th:text="#{text.footer.user}"> Usuario logueado:</span> <span sec:authentication="name"  ></span> 
+			<span th:text="#{text.footer.roles}"> Roles :</span> <span sec:authentication="principal.authorities"></span>
+		</p>
+
+		<span  th:text="#{text.footer.powered}">Proyecto spring boot</span>
+		
 
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"

@@ -12,12 +12,12 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">Borrar</h4>
+						<h4 class="modal-title" id="myModalLabel" th:text="#{text.factura.form.item.eliminar}">Borrar</h4>
 					</div>
 
 					<div class="modal-body">
-						<p>Esta a punto de borrar informacion importante .</p>
-						<p>Quiere continuar?</p>
+						<p th:text="#{text.borrar.dialog1}">Esta a punto de borrar informacion importante.</p>
+						<p th:text="#{text.borrar.dialog2}">Quiere continuar?</p>
 						<p class="debug-url"></p>
 					</div>
 
